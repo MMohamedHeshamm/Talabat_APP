@@ -17,12 +17,17 @@ namespace Talabat.Repoistory
         public static IQueryable<T> GetQuery(IQueryable<T> inputQuery, ISpecification<T> spec)
         {
             var query = inputQuery;
+
             //check if the specification has a criteria, if it does, we apply it to the query
             if (spec.Criteria != null)
-            {
-
                 query = query.Where(spec.Criteria);
-            }
+
+            if (spec.OrderBy != null)
+                query = query.OrderBy(spec.OrderBy);
+            
+            else if (spec.OrderByDesc != null)
+                query = query.OrderByDescending(spec.OrderByDesc);
+
             query = spec.Includes.Aggregate(query, (currentQuery, includeExperssion) => currentQuery.Include(includeExperssion));
             return query;
         }
