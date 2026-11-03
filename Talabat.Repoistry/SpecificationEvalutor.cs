@@ -22,11 +22,19 @@ namespace Talabat.Repoistory
             if (spec.Criteria != null)
                 query = query.Where(spec.Criteria);
 
+
+
             if (spec.OrderBy != null)
                 query = query.OrderBy(spec.OrderBy);
             
             else if (spec.OrderByDesc != null)
                 query = query.OrderByDescending(spec.OrderByDesc);
+
+
+            if (spec.IsPginationEnbaled)
+                query = query.Skip(spec.Skip).Take(spec.Take);
+
+
 
             query = spec.Includes.Aggregate(query, (currentQuery, includeExperssion) => currentQuery.Include(includeExperssion));
             return query;

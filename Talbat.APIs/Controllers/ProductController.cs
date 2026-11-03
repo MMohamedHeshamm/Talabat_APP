@@ -4,8 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 using Talabat.Core.Entites;
 using Talabat.Core.Repoisitories.Contract;
 using Talabat.Core.Specifications;
+using Talabat.Core.Specifications.Product_Specs;
 using Talbat.APIs.DTOs;
 using Talbat.APIs.Errors;
+using Talbat.APIs.Helpers;
 
 namespace Talbat.APIs.Controllers
 {
@@ -21,7 +23,7 @@ namespace Talbat.APIs.Controllers
 
 
         public ProductController(IGenericRepository<Product> productRepo,
-            IMapper mapper , IGenericRepository<ProductCategory> ProductCategoryRepo, IGenericRepository<ProductBrand> ProductBrands)
+            IMapper mapper, IGenericRepository<ProductCategory> ProductCategoryRepo, IGenericRepository<ProductBrand> ProductBrands)
         {
             _productRepo = productRepo;
             _mapper = mapper;
@@ -31,16 +33,16 @@ namespace Talbat.APIs.Controllers
 
 
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<Product>>> GetProducts(string sort , int? brandId , int? CategoryId)
+        public async Task<ActionResult<Pagination<ProductToReturnDto>>> GetProducts([FromQuery] ProductSpecParams specParams)
         {
 
-            var Spec = new ProductWithBrandAndTypeSpecifications(sort , brandId , CategoryId);
+            var Spec = new ProductWithBrandAndTypeSpecifications(specParams);
 
             var Products = await _productRepo.GetAll_Async_Spec(Spec);
 
-            var mappedProducts = _mapper.Map<IEnumerable<Product>, IEnumerable<ProductToReturnDto>>(Products);
+            var data = _mapper.Map<IReadOnlyList<Product>, IReadOnlyList<ProductToReturnDto>>(Products);
 
-            return Ok(mappedProducts);
+            return Ok(new Pagination<ProductToReturnDto>(specParams.PageIndex,specParams.PageSize,data));
 
         }
 
@@ -54,7 +56,7 @@ namespace Talbat.APIs.Controllers
 
             var Products = await _productRepo.GetById_Async_Spec(Spec);
 
-            if (Products is null)  return NotFound(new APiResponse(404)); 
+            if (Products is null) return NotFound(new APiResponse(404));
 
             var mappedProducts = _mapper.Map<Product, ProductToReturnDto>(Products);
 

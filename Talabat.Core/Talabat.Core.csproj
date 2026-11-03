@@ -12,4 +12,8 @@
     <None Remove="Repostr\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Specifications\Employee Specs\" />
+  </ItemGroup>
+
 </Project>
