@@ -4,10 +4,12 @@ namespace Talbat.APIs.Helpers
 {
     public class Pagination<T>
     {
-        public Pagination(int pageIndex, int pageSize, IReadOnlyList<ProductToReturnDto> data)
+        public Pagination(int pageIndex, int pageSize, IReadOnlyList<T> data)
         {
             PageIndex = pageIndex;
             PageSize = pageSize;
+            Count = data.Count;
+            Data = data;
         }
 
         public int PageIndex { get; set; }

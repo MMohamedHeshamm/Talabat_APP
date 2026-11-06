@@ -64,7 +64,7 @@ namespace Talbat.APIs
             try
             {
                 await _dbContext.Database.MigrateAsync();  // for applying the migration to the database
-                await StoreContextSeed.SeedAsync(_dbContext); // for seeding the database with initial data
+                await SeedContext.SeedAsync(_dbContext); // for seeding the database with initial data
 
             }
             //for logging the error if any error has been occured during applying the migration

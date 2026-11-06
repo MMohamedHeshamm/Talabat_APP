@@ -21,6 +21,8 @@ namespace Talabat.Core.Repoisitories.Contract
         Task<IReadOnlyList<T>> GetAll_Async_Spec(ISpecification<T> Spec);
         Task<T> GetById_Async_Spec( ISpecification<T> Spec); 
 
+        Task<int> GetCountAsync(ISpecification<T> Spec);
+
 
         #endregion
 

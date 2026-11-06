@@ -6,7 +6,7 @@ using Talabat.Core.Entites;
 
 namespace Talabat.Repoistory.Data
 {
-    public static class StoreContextSeed
+    public static class SeedContext
     {
         //Extension Method to Seed the Database with Initial Data
         public async static Task SeedAsync(StoreContext _dbContext)

@@ -42,7 +42,11 @@ namespace Talbat.APIs.Controllers
 
             var data = _mapper.Map<IReadOnlyList<Product>, IReadOnlyList<ProductToReturnDto>>(Products);
 
-            return Ok(new Pagination<ProductToReturnDto>(specParams.PageIndex,specParams.PageSize,data));
+            var countSpec = new ProdusctsWIthFilterationorCountSpecification(specParams);
+
+            var count = await _productRepo.GetCountAsync(countSpec);
+
+            return Ok(new Pagination<ProductToReturnDto>(specParams.PageIndex, specParams.PageSize, data));
 
         }
 

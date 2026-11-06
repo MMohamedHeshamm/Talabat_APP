@@ -7,7 +7,7 @@ using Talabat.Core.Entites;
 
 namespace Talabat.Repoistory.Data.Config
 {
-    internal class ProductCategoryConfiguration : IEntityTypeConfiguration<ProductCategory>
+    internal class CategoryConfiguration : IEntityTypeConfiguration<ProductCategory>
     {
         public void Configure(EntityTypeBuilder<ProductCategory> builder)
         {

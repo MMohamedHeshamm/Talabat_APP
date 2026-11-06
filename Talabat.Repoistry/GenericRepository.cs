@@ -61,6 +61,11 @@ namespace Talabat.Repoistory
             return await ApplySpecification(Spec).FirstOrDefaultAsync();
         }
 
+        public async Task<int> GetCountAsync(ISpecification<T> Spec)
+        {
+            return await ApplySpecification(Spec).CountAsync();
+        }
+
 
         #endregion
     }
