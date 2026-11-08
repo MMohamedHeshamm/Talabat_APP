@@ -16,6 +16,7 @@ namespace Talbat.APIs.Extensions
             //for dependency injection of the generic repository
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
+            services    
 
             // for automapper configuration
             services.AddAutoMapper(typeof(MappingProfiles));

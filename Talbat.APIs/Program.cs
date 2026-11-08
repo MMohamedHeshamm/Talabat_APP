@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using StackExchange.Redis;
 using Talabat.Core.Repoisitories.Contract;
 using Talabat.Repoistory;
 using Talabat.Repoistory.Data;
@@ -45,7 +46,13 @@ namespace Talbat.APIs
 
             //-------------------------------------------
 
+            //singleton for redis connection multiplexer to be used in the basket repository
+            builder.Services.AddSingleton<IConnectionMultiplexer>(s =>
+            {
 
+                var connectionString = builder.Configuration.GetConnectionString("Redis");
+                return   ConnectionMultiplexer.Connect(connectionString);
+            });
 
             var app = builder.Build();
 
@@ -100,7 +107,7 @@ namespace Talbat.APIs
 
             // for handling the status code pages and redirecting to the error controller ( not found controller )
             //app.UseStatusCodePagesWithRedirects("/errors/{0}"); 
-            app.UseStatusCodePagesWithReExecute("/errors/{0}"); 
+            app.UseStatusCodePagesWithReExecute("/errors/{0}");
 
 
             app.UseStaticFiles(); // for wwwroot folder to be accessible from the browser

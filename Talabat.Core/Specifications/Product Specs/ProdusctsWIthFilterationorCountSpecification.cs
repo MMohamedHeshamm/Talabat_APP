@@ -5,11 +5,14 @@ using Talabat.Core.Entites;
 
 namespace Talabat.Core.Specifications.Product_Specs
 {
-    internal class ProdusctsWIthFilterationorCountSpecification : BaseSpecifications<Product>
+    public class ProdusctsWIthFilterationorCountSpecification : BaseSpecifications<Product>
     {
         public ProdusctsWIthFilterationorCountSpecification(ProductSpecParams specParams)
-            : base(p => (!specParams.BrandId.HasValue || p.BrandId == specParams.BrandId.Value) &&
-                    (!specParams.CategoryId.HasValue || p.CategoryId == specParams.CategoryId.Value))
+            : base(p =>
+
+             (string.IsNullOrEmpty(specParams.search) || p.Name.ToLower().Contains(specParams.search)) &&
+             (!specParams.BrandId.HasValue || p.BrandId == specParams.BrandId.Value) &&
+             (!specParams.CategoryId.HasValue || p.CategoryId == specParams.CategoryId.Value))
         {
 
         }
